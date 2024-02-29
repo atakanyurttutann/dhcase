@@ -16,7 +16,7 @@ const DetailView = () => {
         <div className=" p-3 bg-white  rounded-lg w-full mt-10 lg:mt-20 shadow-lg">
           <div className=" w-full flex lg:gap-[20px] flex-wrap lg:flex-nowrap ">
             <div className="  relative min-w-full lg:min-w-[433px] h-[433px]">
-              <Image fill alt={data?.name} src={data?.image} className=" rounded-lg " />
+              <Image fill alt={data?.name} src={data?.image} className=" rounded-lg  bg-cover" />
             </div>
             <div className=" flex flex-col justify-between">
               <div>
@@ -28,8 +28,8 @@ const DetailView = () => {
                   {data?.description}
                 </div>
               </div>
-              <div className=" p-2 bg-[#f1f6f9] rounded-lg">
-                <div className=" flex justify-between items-center">
+              <div className=" p-2 bg-[#f1f6f9] rounded-lg lg:mt-0 mt-3">
+                <div className=" flex justify-between items-center lg:flex-nowrap flex-wrap">
                   <div>
                     <div className=" flex gap-[10px]  items-center">
                       <div className="  text-blue-600 text-[25px]   font-bold ">
@@ -45,12 +45,14 @@ const DetailView = () => {
                       Taksite
                     </div>
                   </div>
-                  <div>
+                  <div className=" lg:w-auto w-full lg:mt-0 mt-2">
                     <CustomButton
                       onClick={() => {
                         dispatch(addBasket({ name: data.name, id: data.id }));
                       }}
-                      className={" px-3 py-3 font-semibold  lg:text-[16px] text-[10px]"}
+                      className={
+                        " px-3 py-3 font-semibold  lg:text-[16px] text-[10px] lg:mt-0 mt-1 !w-full"
+                      }
                     >
                       Hemen Satın Al
                     </CustomButton>
