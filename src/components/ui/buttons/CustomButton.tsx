@@ -1,8 +1,10 @@
-import React, { ButtonHTMLAttributes, FC, PropsWithChildren } from "react";
+import { ButtonHTMLAttributes, FC, PropsWithChildren } from "react";
 
-const CustomButton: FC<
-  PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>
-> = ({ className, children, ...props }) => {
+const CustomButton: FC<PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>> = ({
+  className,
+  children,
+  ...props
+}) => {
   return (
     <button
       {...props}

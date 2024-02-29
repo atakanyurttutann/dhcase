@@ -1,6 +1,6 @@
 import { packageData } from "@/data/data";
 import DetailView from "@/view/DetailView";
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 
 type Props = {
   params: { id: number };
