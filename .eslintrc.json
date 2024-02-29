@@ -1,3 +1,26 @@
 {
-  "extends": "next/core-web-vitals"
+  "rules": {
+    "indent":["error", 2],
+    "semi": ["error", "always"],
+    "no-unused-vars":["error", {"vars": "all"}],
+    "no-console":"error",
+    "array-element-newline":["error", {"multiline": true, "minItems": 3}],
+    "array-bracket-newline":"error",
+    "arrow-spacing":"error",
+    "arrow-parens":"error",
+    "eqeqeq":"error",
+    "capitalized-comments":"warn",
+    "no-unused-expressions":"warn",
+    "no-empty-function":"error",
+    "no-duplicate-imports":"warn",
+    "no-extra-semi":"error",
+    "no-const-assign":"error",
+    "no-multiple-empty-lines": ["error",{"max": 1}],
+    "function-paren-newline":"error",
+    "no-multi-spaces": "error",
+    "react/jsx-no-duplicate-props": "error",
+    "react/no-array-index-key": "warn",
+    "react/display-name": "error",
+    "@next/next/no-img-element": "error"
+  }
 }

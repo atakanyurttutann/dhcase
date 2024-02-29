@@ -1,113 +1,159 @@
+"use client";
+import { dispatch } from "@/store/store";
+import { Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import { categoryData, packageData } from "@/data/data";
+import { LeftArrow, RightArrow } from "@/icons";
+import { useState } from "react";
 import Image from "next/image";
+import CustomButton from "@/components/ui/buttons/CustomButton";
+import { addBasket } from "@/store/slice/basketSlice";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const [selectCategory, setSelectCategory] = useState<number>(1);
+  const [page, setPage] = useState<number>(3);
+  const router = useRouter();
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className=" custom-container">
+      <div className="  mt-[100px]">
+        <h1 className=" text-[#0b6ab2] font-bold text-[36px] mb-[10px] ">Paketlerimiz</h1>
+        <>
+          <div className=" flex w-full   justify-end mb-4 gap-[10px]">
+            <div className=" bg-gray-400 flex justify-center items-center w-[40px]  h-[40px] rounded-full  cursor-pointer showcase-left-category">
+              <LeftArrow />
+            </div>
+
+            <div className=" bg-gray-400 flex justify-center items-center w-[40px]  h-[40px] rounded-full  cursor-pointer showcase-right-category">
+              <RightArrow />
+            </div>
+          </div>
+
+          <Swiper
+            modules={[Navigation]}
+            spaceBetween={10}
+            breakpoints={{
+              720: {
+                slidesPerView: 2,
+              },
+              1200: {
+                slidesPerView: 5,
+              },
+              1700: {
+                slidesPerView: 5,
+              },
+            }}
+            navigation={{
+              nextEl: ".showcase-right-category",
+              prevEl: ".showcase-left-category",
+            }}
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+            {categoryData.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div
+                  onClick={() => {
+                    setSelectCategory(item.id);
+                    setPage(3);
+                  }}
+                  className={`lg:w-[200px]    py-2 flex justify-center items-center   bg-[#EBF2F5] transition-all rounded pcard cursor-pointer text-[13px] font-semibold text-[#3A4759] #${
+                    selectCategory == item.id ? "  bg-blue-500 !text-white" : ""
+                  }`}
+                >
+                  {item.name}
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </>
       </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div className=" grid grid-cols-1 lg:grid-cols-3 gap-x-[20px] gap-y-[45px] mt-14">
+        {packageData
+          .filter((q) => q.categoryId == selectCategory)
+          .slice(0, page)
+          .map((item, index) => (
+            <div
+              key={index}
+              className=" shadow-lg hover:shadow-none rounded-lg  cursor-pointer  h-[600px] duration-500 hover:translate-y-[-50px]  relative packageCard  transition-all justify-between flex flex-col  "
+            >
+              <div
+                onClick={() => {
+                  router.push("/detail/" + item.id);
+                }}
+                className=" absolute w-full h-[660px] top-0 left-0 shadow-lg  rounded-lg  z-50  topCard opacity-0"
+              >
+                {" "}
+              </div>
+
+              <div>
+                <div className=" relative w-full h-[300px]  ">
+                  <Image src={item.image} fill alt={item.name} className="  rounded-lg" />
+                </div>
+
+                <div className=" px-3">
+                  <div className=" mt-2 font-bold  text-[16px]">{item.name} </div>
+                  <div className=" mt-2   px-4">
+                    {item.detail.map((detailItem, detailIndex) => (
+                      <ul key={detailIndex} className="list-disc">
+                        <li className=" text-sm text-gray-700">{detailItem.name}</li>
+                      </ul>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className=" p-3">
+                <div className=" flex gap-[10px]  items-center">
+                  <div className="  text-blue-600 text-[25px]   font-bold ">
+                    {item.discountedPrice} {" TL"}
+                  </div>
+                  <div className="  text-red-600 text-[14px]   font-bold line-through ">
+                    {item.price} {" TL"}
+                  </div>
+                </div>
+                <div className="  mt-1  text-[12px]  text-green-400">
+                  Peşin Fiyatına Vade Farksız{" "}
+                  <span className="  font-bold">Ayda {item.installment} TL</span> Taksite
+                </div>
+                <div className=" absolute bg-w bottom-[-50px] left-0 w-full opacity-0 packageCardButton z-[1001]  transition-all duration-500  ">
+                  <div className="   grid-cols-2 grid gap-3  px-2 ">
+                    <CustomButton
+                      onClick={() => {
+                        router.push("/detail/" + item.id);
+                      }}
+                      className={`!text-[#0b6ab2] !bg-white !py-1 border `}
+                    >
+                      İncele
+                    </CustomButton>
+                    <CustomButton
+                      onClick={() => {
+                        dispatch(addBasket({ name: item.name, id: item.id }));
+                      }}
+                      className={`!bg-[#0b6ab2] py-3  !text-white `}
+                    >
+                      Satın Al
+                    </CustomButton>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
       </div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+      {packageData.filter((q) => q.categoryId == selectCategory).length > page && (
+        <CustomButton
+          className=" mt-20  mx-auto  mb-20  !border-[#0b6ab2] border py-3 px-6 !bg-white !text-[#0b6ab2]"
+          onClick={() => {
+            setPage(page + 3);
+          }}
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+          Daha Fazla Göster
+        </CustomButton>
+      )}
     </main>
   );
 }
