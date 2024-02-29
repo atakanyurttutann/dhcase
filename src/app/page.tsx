@@ -30,7 +30,7 @@ export default function Home() {
             <LeftArrow />
           </div>
 
-          <div className=" bg-gray-400 flex justify-center items-center w-[40px]  h-[40px] rounded-full  cursor-pointer showcase-right-category">
+          <div className=" bg-gray-400 flex z-[3000] justify-center items-center w-[40px]  h-[40px] rounded-full  cursor-pointer showcase-right-category">
             <RightArrow />
           </div>
         </div>
