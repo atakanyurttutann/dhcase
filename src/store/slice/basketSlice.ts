@@ -22,9 +22,12 @@ export const basketSlice = createSlice({
         state.basket.push({ name: action.payload.name, id: action.payload.id });
       }
     },
+    clearBasket: (state) => {
+      state.basket = [];
+    },
   },
 });
 
 export default basketSlice.reducer;
 
-export const { addBasket } = basketSlice.actions;
+export const { addBasket, clearBasket } = basketSlice.actions;

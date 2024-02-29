@@ -23,53 +23,52 @@ export default function Home() {
     <main className=" custom-container">
       <div className="  mt-[100px]">
         <h1 className=" text-[#0b6ab2] font-bold text-[36px] mb-[10px] ">Paketlerimiz</h1>
-        <>
-          <div className=" flex w-full   justify-end mb-4 gap-[10px]">
-            <div className=" bg-gray-400 flex justify-center items-center w-[40px]  h-[40px] rounded-full  cursor-pointer showcase-left-category">
-              <LeftArrow />
-            </div>
 
-            <div className=" bg-gray-400 flex justify-center items-center w-[40px]  h-[40px] rounded-full  cursor-pointer showcase-right-category">
-              <RightArrow />
-            </div>
+        <div className=" flex w-full   justify-end mb-4 gap-[10px]">
+          <div className=" bg-gray-400 flex justify-center items-center w-[40px]  h-[40px] rounded-full  cursor-pointer showcase-left-category">
+            <LeftArrow />
           </div>
 
-          <Swiper
-            modules={[Navigation]}
-            spaceBetween={10}
-            breakpoints={{
-              720: {
-                slidesPerView: 2,
-              },
-              1200: {
-                slidesPerView: 5,
-              },
-              1700: {
-                slidesPerView: 5,
-              },
-            }}
-            navigation={{
-              nextEl: ".showcase-right-category",
-              prevEl: ".showcase-left-category",
-            }}
-          >
-            {categoryData.map((item, index) => (
-              <SwiperSlide key={index}>
-                <div
-                  onClick={() => {
-                    setSelectCategory(item.id);
-                    setPage(3);
-                  }}
-                  className={`lg:w-[200px]    py-2 flex justify-center items-center   bg-[#EBF2F5] transition-all rounded pcard cursor-pointer text-[13px] font-semibold text-[#3A4759] #${
-                    selectCategory == item.id ? "  bg-blue-500 !text-white" : ""
-                  }`}
-                >
-                  {item.name}
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </>
+          <div className=" bg-gray-400 flex justify-center items-center w-[40px]  h-[40px] rounded-full  cursor-pointer showcase-right-category">
+            <RightArrow />
+          </div>
+        </div>
+
+        <Swiper
+          modules={[Navigation]}
+          spaceBetween={10}
+          breakpoints={{
+            720: {
+              slidesPerView: 2,
+            },
+            1200: {
+              slidesPerView: 5,
+            },
+            1700: {
+              slidesPerView: 5,
+            },
+          }}
+          navigation={{
+            nextEl: ".showcase-right-category",
+            prevEl: ".showcase-left-category",
+          }}
+        >
+          {categoryData.map((item, index) => (
+            <SwiperSlide key={index}>
+              <div
+                onClick={() => {
+                  setSelectCategory(item.id);
+                  setPage(3);
+                }}
+                className={`lg:w-[200px]    py-2 flex justify-center items-center   bg-[#EBF2F5] transition-all rounded pcard cursor-pointer text-[13px] font-semibold text-[#3A4759] #${
+                  selectCategory == item.id ? "  bg-blue-500 !text-white" : ""
+                }`}
+              >
+                {item.name}
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
 
       <div className=" grid grid-cols-1 lg:grid-cols-3 gap-x-[20px] gap-y-[45px] mt-14">
